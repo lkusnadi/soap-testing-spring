@@ -1,4 +1,4 @@
-# soap-endpoint
+# soap-endpoint-spring
 Demonstration of SOAP endpoint testing using Spring
 
 This project shows how to run SOAP endpoint testing using **Apache CXF** framework.
