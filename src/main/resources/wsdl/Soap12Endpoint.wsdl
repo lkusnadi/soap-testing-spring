@@ -1,0 +1,761 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://xmlns.carsguide.com.au/schemas/vehiclelistings" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="PrivatePartyListingWebServiceService" targetNamespace="http://xmlns.carsguide.com.au/schemas/vehiclelistings">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlns.carsguide.com.au/schemas/vehiclelistings" xmlns:ns2="http://xmlns.carsguide.com.au/schemas/commondefs" xmlns:ns1="http://xmlns.carsguide.com.au/schemas/customer" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://xmlns.carsguide.com.au/schemas/vehiclelistings">
+  <xs:import namespace="http://xmlns.carsguide.com.au/schemas/customer"/>
+  <xs:import namespace="http://xmlns.carsguide.com.au/schemas/commondefs"/>
+  <xs:element name="Vehicle">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Make" type="xs:string"/>
+        <xs:element form="qualified" name="Model" type="xs:string"/>
+        <xs:element form="qualified" name="ModelYear" type="xs:int"/>
+        <xs:element form="qualified" minOccurs="0" name="ModelVariant" type="xs:string"/>
+        <xs:element form="qualified" name="Series" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="Doors" type="xs:int"/>
+        <xs:element form="qualified" minOccurs="0" name="Seats" type="xs:int"/>
+        <xs:element form="qualified" minOccurs="0" name="BodyType" type="ns2:BodyTypeEnum"/>
+        <xs:element form="qualified" minOccurs="0" name="FuelType" type="ns2:FuelTypeEnum"/>
+        <xs:element form="qualified" minOccurs="0" name="DriveTrainType" type="ns2:DriveTrainTypeEnum"/>
+        <xs:element form="qualified" minOccurs="0" name="Engine">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" minOccurs="0" name="EngineType" type="xs:string"/>
+              <xs:element form="qualified" minOccurs="0" name="EngineDisplacementUOM" type="ns2:EngineDisplacementUOM"/>
+              <xs:element form="qualified" minOccurs="0" name="EngineSize" type="xs:decimal"/>
+              <xs:element form="qualified" minOccurs="0" name="EngineCylinderCount" type="xs:int"/>
+              <xs:element form="qualified" minOccurs="0" name="EngineDescription" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" minOccurs="0" name="Transmission">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" minOccurs="0" name="TransmissionDescription" type="xs:string"/>
+              <xs:element form="qualified" name="TransmissionType" type="ns2:TransmissionTypeEnum"/>
+              <xs:element form="qualified" minOccurs="0" name="TransmissionGearCount" type="xs:int"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" minOccurs="0" name="VehicleDescription" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VehicleFeatures">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" minOccurs="0" name="BaseColour" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ExteriorColour" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="InteriorColour" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="InteriorDescription" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="VehicleFeatureOptionList" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VehicleIdentity">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" minOccurs="0" name="VinNumber" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="Registration" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="RegistrationExpiry" type="xs:date"/>
+        <xs:element form="qualified" minOccurs="0" name="EngineNumber" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="OdometerKms" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VehicleListing">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" minOccurs="0" name="ListingID" type="xs:int"/>
+        <xs:element form="qualified" minOccurs="0" name="VehicleListingID" type="xs:int"/>
+        <xs:element form="qualified" name="ListingExtRefId" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ListDate" type="xs:date"/>
+        <xs:element form="qualified" minOccurs="0" name="ListUpdateDate" type="xs:dateTime"/>
+        <xs:element form="qualified" minOccurs="0" name="ListFromDate" type="xs:date"/>
+        <xs:element form="qualified" minOccurs="0" name="ListToDate" type="xs:date"/>
+        <xs:element form="qualified" name="ListingSource" type="xs:string"/>
+        <xs:element form="qualified" name="DisplayHash" type="xs:string"/>
+        <xs:element form="qualified" name="ListingStatus" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="StockCode" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="SellerType" type="ns2:SellerTypeEnum"/>
+        <xs:element form="qualified" minOccurs="0" name="Condition" type="ns2:ConditionTypeEnum"/>
+        <xs:element form="qualified" minOccurs="0" name="PostCode" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="Suburb" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="SellerComment" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="SellerListingSummary" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="PreferredContactTime" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="Price">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" minOccurs="0" name="listPrice" type="xs:decimal"/>
+              <xs:element form="qualified" minOccurs="0" name="specialPrice" type="xs:decimal"/>
+              <xs:element form="qualified" minOccurs="0" name="driveAwayPrice" type="xs:decimal"/>
+              <xs:element form="qualified" minOccurs="0" name="ono" type="xs:boolean"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" minOccurs="0" name="PaypalResultCode" type="xs:int"/>
+        <xs:element form="qualified" minOccurs="0" name="PaypalResponseMessage" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="VCode" type="xs:int"/>
+        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Images">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="ImageType" type="ns2:ImageTypeEnum"/>
+              <xs:element form="qualified" name="ImageUrl" type="xs:string"/>
+              <xs:element form="qualified" name="ImageOrder" type="xs:int"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Videos">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element form="qualified" name="VideoSource" type="ns2:VideoSourceEnum"/>
+              <xs:element form="qualified" name="VideoMediaId" type="xs:string"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element form="qualified" minOccurs="0" name="Products">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns2:Product"/>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element minOccurs="0" ref="tns:Vehicle"/>
+        <xs:element minOccurs="0" ref="tns:VehicleIdentity"/>
+        <xs:element minOccurs="0" ref="tns:VehicleFeatures"/>
+        <xs:element minOccurs="0" ref="tns:VehicleSpecification"/>
+        <xs:element minOccurs="0" ref="ns1:CustomerProfile"/>
+        <xs:element form="qualified" minOccurs="0" name="RoadWorthyCertificate" type="xs:boolean"/>
+        <xs:element form="qualified" minOccurs="0" name="ServiceHistory" type="xs:boolean"/>
+        <xs:element form="qualified" minOccurs="0" name="Warranty" type="xs:boolean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VehicleListings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tns:VehicleListing"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="VehicleSpecification">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" minOccurs="0" name="JatoId" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="Nvic" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="RedbookId" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="GreenStarId" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ancapId" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ncapId" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="uniqueVehicleId" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="deleteListing" type="tns:deleteListing"/>
+  <xs:element name="deleteListingResponse" type="tns:deleteListingResponse"/>
+  <xs:element name="getListing" type="tns:getListing"/>
+  <xs:element name="getListingResponse" type="tns:getListingResponse"/>
+  <xs:element name="getListingStatus" type="tns:getListingStatus"/>
+  <xs:element name="getListingStatusResponse" type="tns:getListingStatusResponse"/>
+  <xs:element name="getListings" type="tns:getListings"/>
+  <xs:element name="getListingsResponse" type="tns:getListingsResponse"/>
+  <xs:element name="getProducts" type="tns:getProducts"/>
+  <xs:element name="getProductsResponse" type="tns:getProductsResponse"/>
+  <xs:element name="listingServiceFaultDetails" type="tns:listingServiceFaultDetails"/>
+  <xs:element name="saveListing" type="tns:saveListing"/>
+  <xs:element name="saveListingResponse" type="tns:saveListingResponse"/>
+  <xs:element name="saveProducts" type="tns:saveProducts"/>
+  <xs:element name="saveProductsResponse" type="tns:saveProductsResponse"/>
+  <xs:complexType name="getListingStatus">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="listingExternalReferenceId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListingStatusResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ListingStatusResult" type="tns:listingStatusResult"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listingStatusResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fraudDetectionStatus" type="tns:fraudDetectionStatus"/>
+      <xs:element minOccurs="0" name="listingExternalReferenceId" type="xs:string"/>
+      <xs:element minOccurs="0" name="listingStatus" type="tns:listingStatus"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="listingServiceFaultDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:string"/>
+      <xs:element minOccurs="0" name="details" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListings">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns1:customerEmailAddress"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListingsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:VehicleListings"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListing">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="listingExternalReferenceId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getListingResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:VehicleListing"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="saveListing">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="tns:VehicleListing"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="saveListingResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ListingStatusResult" type="tns:listingStatusResult"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteListing">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="listingExternalReferenceId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteListingResponse">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="ListingStatusResult" type="tns:listingStatusResult"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getProducts">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getProductsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns2:products"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="saveProducts">
+    <xs:sequence>
+      <xs:element minOccurs="0" ref="ns2:products"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="saveProductsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:simpleType name="fraudDetectionStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="APPROVED"/>
+      <xs:enumeration value="PENDING_APPROVAL"/>
+      <xs:enumeration value="DENIED"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="listingStatus">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACTIVE"/>
+      <xs:enumeration value="INACTIVE"/>
+      <xs:enumeration value="PROCESSING"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ListingNotFoundFault" nillable="true" type="tns:listingServiceFaultDetails"/>
+  <xs:element name="ListingServiceFault" nillable="true" type="tns:listingServiceFaultDetails"/>
+  <xs:element name="ListingValidationFault" nillable="true" type="tns:listingServiceFaultDetails"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlns.carsguide.com.au/schemas/customer" xmlns:ns1="http://xmlns.carsguide.com.au/schemas/commondefs" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://xmlns.carsguide.com.au/schemas/customer">
+  <xs:import namespace="http://xmlns.carsguide.com.au/schemas/commondefs"/>
+  <xs:element name="Contact">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" minOccurs="0" name="ContactTitle" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ContactFirstName" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ContactLastName" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ContactEmailAddress" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ContactPhone" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ContactSalutation" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="ContactDetails" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomerProfile">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="CustomerType" type="ns1:CustomerTypeEnum"/>
+        <xs:element form="qualified" name="Customer">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" ref="ns1:AustralianAddress"/>
+              <xs:choice minOccurs="0">
+                <xs:element form="qualified" name="Dealer">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element form="qualified" name="DealerId" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerParentId" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerExternalCode" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerExternalRefCode" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerType" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerLicense" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="ABN" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="ACN" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="CompanyName" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="FranchiseName" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="TradingName" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="AllocatedPhoneNumber" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="LeadPhoneNumber" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="LeadEmailAddress" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="LeadEmailAddressCC" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerWebsite" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerManagementSystem" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="DealerAggregatorSystem" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="Status" type="xs:string"/>
+                      <xs:element minOccurs="0" ref="tns:Contact"/>
+                      <xs:element form="qualified" minOccurs="0" name="LocationID" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="LocationName" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="VideoProduct" type="xs:string"/>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+                <xs:element form="qualified" name="PrivateParty">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element form="qualified" minOccurs="0" name="FirstName" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="LastName" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="PhoneContact" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="EmailAddress" type="xs:string"/>
+                      <xs:element form="qualified" minOccurs="0" name="ExternalId" type="xs:string"/>
+                      <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Products">
+                        <xs:complexType>
+                          <xs:sequence>
+                            <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns1:Product"/>
+                          </xs:sequence>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:choice>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CustomerProfiles">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="tns:CustomerProfile"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="customerEmailAddress" type="xs:string"/>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xmlns.carsguide.com.au/schemas/commondefs" targetNamespace="http://xmlns.carsguide.com.au/schemas/commondefs" version="1.0">
+
+  <xs:element name="ABN" type="xs:string"/>
+
+  <xs:element name="ACN" type="xs:string"/>
+
+  <xs:element name="AustralianAddress">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" maxOccurs="unbounded" name="AddressLine" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="SuburbOrPlaceOrLocality" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="StateOrTerritory" type="tns:AustralianStateOrTerritory"/>
+        <xs:element form="qualified" minOccurs="0" name="PostCode" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="Product">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element form="qualified" name="Code" type="xs:string"/>
+        <xs:element form="qualified" name="Label" type="xs:string"/>
+        <xs:element form="qualified" minOccurs="0" name="Description" type="xs:string"/>
+        <xs:element form="qualified" name="Status" type="tns:ProductStatusEnum"/>
+        <xs:element form="qualified" minOccurs="0" name="ActivationDate" type="xs:date"/>
+        <xs:element form="qualified" minOccurs="0" name="EndDate" type="xs:date"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="products">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:Product"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="SellerTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NEW"/>
+      <xs:enumeration value="USED"/>
+      <xs:enumeration value="PRIVATE_USED"/>
+      <xs:enumeration value="NEW_CAR_IN_STOCK"/>
+      <xs:enumeration value="EX_DEMO"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ConditionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AS_NEW"/>
+      <xs:enumeration value="VERY_GOOD"/>
+      <xs:enumeration value="GOOD"/>
+      <xs:enumeration value="DAMAGED"/>
+      <xs:enumeration value="FAIR"/>
+      <xs:enumeration value="OFF_THE_ROAD"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ImageTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LARGE"/>
+      <xs:enumeration value="MEDIUM"/>
+      <xs:enumeration value="SMALL"/>
+      <xs:enumeration value="THUMBNAIL"/>
+      <xs:enumeration value="LOGO"/>
+      <xs:enumeration value="OTHER"/>
+      <xs:enumeration value="ORIGINAL"/>
+      <xs:enumeration value="STOCK"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="VideoSourceEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DMI_VIDEO"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="ProductStatusEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ACTIVE"/>
+      <xs:enumeration value="INACTIVE"/>
+      <xs:enumeration value="PENDING"/>
+      <xs:enumeration value="EXPIRED"/>
+      <xs:enumeration value="DELETED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="BodyTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SEDAN"/>
+      <xs:enumeration value="HATCH"/>
+      <xs:enumeration value="FOUR_WHEEL_DRIVE"/>
+      <xs:enumeration value="WAGON"/>
+      <xs:enumeration value="COMMERCIAL"/>
+      <xs:enumeration value="UTE_TRAY"/>
+      <xs:enumeration value="CONVERTIBLE"/>
+      <xs:enumeration value="COUPE"/>
+      <xs:enumeration value="HARDTOP"/>
+      <xs:enumeration value="PEOPLE_MOVER"/>
+      <xs:enumeration value="OTHER"/>
+      <xs:enumeration value="SUV"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="FuelTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DIESEL"/>
+      <xs:enumeration value="LEADED"/>
+      <xs:enumeration value="UNLEADED"/>
+      <xs:enumeration value="PREM_UNLEADED"/>
+      <xs:enumeration value="LPG"/>
+      <xs:enumeration value="HYBRID"/>
+      <xs:enumeration value="ELECTRIC"/>
+      <xs:enumeration value="DUAL"/>
+      <xs:enumeration value="OTHER"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="DriveTrainTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FOUR_WHEEL_DRIVE"/>
+      <xs:enumeration value="FRONT_WHEEL_DRIVE"/>
+      <xs:enumeration value="REAR_WHEEL_DRIVE"/>
+      <xs:enumeration value="ALL_WHEEL_DRIVE"/>
+      <xs:enumeration value="OTHER"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="EngineDisplacementUOM">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Litre"/>
+      <xs:enumeration value="CubicCentimetres"/>
+      <xs:enumeration value="CubicInch"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="TransmissionTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AUTOMATIC"/>
+      <xs:enumeration value="MANUAL"/>
+      <xs:enumeration value="OTHER"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="CustomerTypeEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DEALER"/>
+      <xs:enumeration value="PRIVATE_PARTY"/>
+      <xs:enumeration value="EXTERNAL_DEALER"/>
+      <xs:enumeration value="EXTERNAL_PRIVATE_PARTY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="AustralianStateOrTerritory">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="AAT"/>
+      <xs:enumeration value="ACT"/>
+      <xs:enumeration value="NSW"/>
+      <xs:enumeration value="NT"/>
+      <xs:enumeration value="QLD"/>
+      <xs:enumeration value="SA"/>
+      <xs:enumeration value="TAS"/>
+      <xs:enumeration value="VIC"/>
+      <xs:enumeration value="WA"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ListingNotFoundFault">
+    <wsdl:part element="tns:ListingNotFoundFault" name="ListingNotFoundFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListings">
+    <wsdl:part element="tns:getListings" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="saveListingResponse">
+    <wsdl:part element="tns:saveListingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteListingResponse">
+    <wsdl:part element="tns:deleteListingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProductsResponse">
+    <wsdl:part element="tns:getProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListingResponse">
+    <wsdl:part element="tns:getListingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="saveListing">
+    <wsdl:part element="tns:saveListing" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteListing">
+    <wsdl:part element="tns:deleteListing" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListingsResponse">
+    <wsdl:part element="tns:getListingsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="saveProductsResponse">
+    <wsdl:part element="tns:saveProductsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListingStatus">
+    <wsdl:part element="tns:getListingStatus" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListingStatusResponse">
+    <wsdl:part element="tns:getListingStatusResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListingValidationFault">
+    <wsdl:part element="tns:ListingValidationFault" name="ListingValidationFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ListingServiceFault">
+    <wsdl:part element="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getListing">
+    <wsdl:part element="tns:getListing" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getProducts">
+    <wsdl:part element="tns:getProducts" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="saveProducts">
+    <wsdl:part element="tns:saveProducts" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="PrivatePartyListingWebService">
+    <wsdl:operation name="getListingStatus">
+      <wsdl:input message="tns:getListingStatus" name="getListingStatus">
+    </wsdl:input>
+      <wsdl:output message="tns:getListingStatusResponse" name="getListingStatusResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ListingNotFoundFault" name="ListingNotFoundFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListings">
+      <wsdl:input message="tns:getListings" name="getListings">
+    </wsdl:input>
+      <wsdl:output message="tns:getListingsResponse" name="getListingsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListing">
+      <wsdl:input message="tns:getListing" name="getListing">
+    </wsdl:input>
+      <wsdl:output message="tns:getListingResponse" name="getListingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ListingNotFoundFault" name="ListingNotFoundFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="saveListing">
+      <wsdl:input message="tns:saveListing" name="saveListing">
+    </wsdl:input>
+      <wsdl:output message="tns:saveListingResponse" name="saveListingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ListingValidationFault" name="ListingValidationFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteListing">
+      <wsdl:input message="tns:deleteListing" name="deleteListing">
+    </wsdl:input>
+      <wsdl:output message="tns:deleteListingResponse" name="deleteListingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ListingNotFoundFault" name="ListingNotFoundFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getProducts">
+      <wsdl:input message="tns:getProducts" name="getProducts">
+    </wsdl:input>
+      <wsdl:output message="tns:getProductsResponse" name="getProductsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="saveProducts">
+      <wsdl:input message="tns:saveProducts" name="saveProducts">
+    </wsdl:input>
+      <wsdl:output message="tns:saveProductsResponse" name="saveProductsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:ListingServiceFault" name="ListingServiceFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PrivatePartyListingWebServiceServiceSoapBinding" type="tns:PrivatePartyListingWebService">
+    <soap12:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getListingStatus">
+      <soap12:operation soapAction="urn:getListingStatus" style="document"/>
+      <wsdl:input name="getListingStatus">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getListingStatusResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ListingServiceFault">
+        <soap12:fault name="ListingServiceFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ListingNotFoundFault">
+        <soap12:fault name="ListingNotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListings">
+      <soap12:operation soapAction="urn:getListings" style="document"/>
+      <wsdl:input name="getListings">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getListingsResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ListingServiceFault">
+        <soap12:fault name="ListingServiceFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getListing">
+      <soap12:operation soapAction="urn:getListing" style="document"/>
+      <wsdl:input name="getListing">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getListingResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ListingServiceFault">
+        <soap12:fault name="ListingServiceFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ListingNotFoundFault">
+        <soap12:fault name="ListingNotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="saveListing">
+      <soap12:operation soapAction="urn:saveListing" style="document"/>
+      <wsdl:input name="saveListing">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="saveListingResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ListingServiceFault">
+        <soap12:fault name="ListingServiceFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ListingValidationFault">
+        <soap12:fault name="ListingValidationFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteListing">
+      <soap12:operation soapAction="urn:deleteListing" style="document"/>
+      <wsdl:input name="deleteListing">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteListingResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ListingServiceFault">
+        <soap12:fault name="ListingServiceFault" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ListingNotFoundFault">
+        <soap12:fault name="ListingNotFoundFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getProducts">
+      <soap12:operation soapAction="urn:getProducts" style="document"/>
+      <wsdl:input name="getProducts">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getProductsResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ListingServiceFault">
+        <soap12:fault name="ListingServiceFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="saveProducts">
+      <soap12:operation soapAction="urn:saveProducts" style="document"/>
+      <wsdl:input name="saveProducts">
+        <soap12:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="saveProductsResponse">
+        <soap12:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="ListingServiceFault">
+        <soap12:fault name="ListingServiceFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PrivatePartyListingWebServiceService">
+    <wsdl:port binding="tns:PrivatePartyListingWebServiceServiceSoapBinding" name="PrivatePartyListingWebServicePort">
+      <soap12:address location="http://uat.le.carsguide.com.au/ws/PrivatePartyListingWebService/v1.0.0/Soap12Endpoint"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
