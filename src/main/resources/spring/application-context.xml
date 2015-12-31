@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:soap="http://cxf.apache.org/bindings/soap"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://cxf.apache.org/bindings/soap 
+		http://cxf.apache.org/schemas/configuration/soap.xsd
+		http://cxf.apache.org/jaxws 
+        http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<bean id="signHeaderOutbound" class="au.com.carsguide.endpoint.soap.CgSignatureOutInterceptor"/>
+
+	<bean id="logInbound" class="org.apache.cxf.interceptor.LoggingInInterceptor">
+		<property name="prettyLogging" value="true"/>
+	</bean>
+
+	<bean id="logOutbound" class="org.apache.cxf.interceptor.LoggingOutInterceptor">
+		<property name="prettyLogging" value="true"/>
+	</bean>
+
+	<jaxws:client id="privateListingClient"
+		serviceClass="au.com.carsguide.xmlns.schemas.vehiclelistings.PrivatePartyListingWebService"
+		address="http://fitz.fake.carsguide.com.au/ws/soap/PrivatePartyListingWebService/v1.0.0/Soap12Endpoint">
+
+		<jaxws:inInterceptors>
+			<ref bean="logInbound"/>
+		</jaxws:inInterceptors>
+		<jaxws:outInterceptors>
+			<ref bean="logOutbound"/>
+			<ref bean="signHeaderOutbound"/>
+		</jaxws:outInterceptors>
+		
+		<jaxws:binding>
+			<soap:soapBinding version="1.2"/>
+		</jaxws:binding>
+	</jaxws:client>
+
+</beans>
